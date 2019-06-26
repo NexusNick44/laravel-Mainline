@@ -21,6 +21,7 @@ class HomeController extends Controller
         $block_2 = Blocks::find(2);
         $block_3 = Blocks::find(3);
         $block_4 = Blocks::find(4);
+
         return view('frontend.index', compact('block_1', 'block_2', 'block_3', 'block_4'));
     }
 
