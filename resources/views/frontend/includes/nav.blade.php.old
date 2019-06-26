@@ -1,0 +1,99 @@
+<nav class="navbar navbar-expand-lg navbar-light fixed-top-sm pb-0">
+    <p class="navbar-brand"></p>
+{{--    navbar navbar-expand-md fixed-top-sm justify-content-end flex-nowrap bg-dark navbar-dark--}}
+    <button class="navbar-toggler navbar-toggler-right pull-right" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false"
+            aria-label="@lang('labels.general.toggle_navigation')">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <div class="collapse navbar-collapse justify-content-end" id="navbarSupportedContent">
+        <ul class="navbar-nav">
+            @if(config('locale.status') && count(config('locale.languages')) > 1)
+{{--                <li class="nav-item dropdown">--}}
+{{--                    <a href="#" class="nav-link dropdown-toggle" id="navbarDropdownLanguageLink" data-toggle="dropdown"--}}
+{{--                       aria-haspopup="true" aria-expanded="false">@lang('menus.language-picker.language') ({{ strtoupper(app()->getLocale()) }})</a>--}}
+
+{{--                    @include('includes.partials.lang')--}}
+{{--                </li>--}}
+            @endif
+
+            @auth
+{{--                <li class="nav-item"><a href="{{route('frontend.user.dashboard')}}" class="nav-link {{ active_class(Active::checkRoute('frontend.user.dashboard')) }}">@lang('navs.frontend.dashboard')</a></li>--}}
+                <li class="nav-item"><a href="{{ route('frontend.user.account') }}" class="nav-link  {{ active_class(Active::checkRoute('frontend.user.account')) }}">
+                        <i class="far fa-user"></i> @lang('navs.frontend.user.account')</a></li>
+            @endauth
+
+            @guest
+                <li class="nav-item"><a href="{{route('frontend.auth.login')}}" class="nav-link {{ active_class(Active::checkRoute('frontend.auth.login')) }}">
+                        <i class="fas fa-sign-in-alt"></i> @lang('navs.frontend.login')</a></li>
+
+                @if(config('access.registration'))
+                    <li class="nav-item"><a href="{{route('frontend.auth.register')}}" class="nav-link {{ active_class(Active::checkRoute('frontend.auth.register')) }}">
+                            <i class="far fa-address-card"></i> @lang('navs.frontend.register')</a></li>
+                @endif
+
+
+
+            @else
+                <li class="nav-item dropdown">
+                    <a href="#" class="nav-link dropdown-toggle" id="navbarDropdownMenuUser" data-toggle="dropdown"
+                       aria-haspopup="true" aria-expanded="false">{{ $logged_in_user->name }}</a>
+
+                    <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuUser">
+                        @can('view backend')
+                            <a href="{{ route('admin.dashboard') }}" class="dropdown-item">
+                                <i class="fas fa-unlock-alt"></i> @lang('navs.frontend.user.administration')</a>
+                        @endcan
+
+{{--                        <a href="{{ route('frontend.user.account') }}" class="dropdown-item {{ active_class(Active::checkRoute('frontend.user.account')) }}">--}}
+{{--                            <i class="far fa-user"></i> @lang('navs.frontend.user.account')</a>--}}
+                        <a href="{{ route('frontend.auth.logout') }}" class="dropdown-item">
+                            <i class="fas fa-sign-out-alt"></i> @lang('navs.general.logout')</a>
+                    </div>
+                </li>
+            @endguest
+
+                <li class="nav-item"><a href="{{route('frontend.auth.login')}}" class="nav-link">
+                        <i class="fas fa-shopping-basket"></i><span class="badge badge-brand-colour ml-1">4</span> Basket</a></li>
+                <li class="nav-item"><a href="tel:01949861000" class="nav-link">
+                        <i class="fa fa-phone thin-pad-right color-brand-light" aria-hidden="true"></i> 01949 861000</a></li>
+
+            <li class="nav-item"><a href="{{route('frontend.contact')}}" class="nav-link {{ active_class(Active::checkRoute('frontend.contact')) }}">
+                    <i class="far fa-address-book"></i> @lang('navs.frontend.contact')</a></li>
+        </ul>
+    </div>
+</nav>
+<nav class="navbar navbar-expand-md">
+    <a href="{{ route('frontend.index') }}" class="navbar-brand">
+        <img src="/img/frontend/logo.png" alt="Husqui_Logo">
+    </a>
+    <div id="navbarSupportedContent" class="mb-3 collapse navbar-collapse justify-content-end">
+        <form class="form-inline mt-2 mt-md-0">
+            <div class="input-group">
+                <input type="text" class="form-control" placeholder="Search" aria-label="Recipient's username" aria-describedby="basic-addon2">
+                <div class="input-group-append">
+                    <button class="btn btn-outline-secondary" type="button"><i class="fas fa-search"></i></button>
+                </div>
+            </div>
+        </form>
+    </div>
+</nav>
+<nav class="navbar navbar-expand-md navbar-light justify-content-start red-bottom">
+    <div class="pl-5">
+        <ul class="navbar-nav flex-lg-row flex-sm-grow-0 flex-row">
+            <li class="nav-item active">
+                <a class="nav-link" href="#">Husqui Skirting Boards</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="#">Husqui Architrave</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="#">Husqui Scotia</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="#">Husqui Accessories</a>
+            </li>
+        </ul>
+    </div>
+</nav>
