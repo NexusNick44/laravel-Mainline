@@ -27,21 +27,30 @@
     :root {
         --main-brand-color: #B50000;
     }
+
+    .dropdown-menu{
+        font-size: 12px;
+    }
+
     nav a.nav-link{
         font-family: 'Open Sans', sans-serif;
         /*font-size: 14px;*/
     }
+
     .red-bottom{
         border-bottom: 1px solid var(--main-brand-color);
     }
+
     i, .fas .fa{
         color: var(--main-brand-color);
         font-size: 1.1em;
     }
+
     .badge-brand-colour{
         background-color: var(--main-brand-color);
         color: #ffffff;
     }
+
     .navbar {
         /*padding: 0px 0px 0px 0px;*/
         padding-top: 0;
@@ -80,6 +89,7 @@
     .card-block {
         word-wrap: break-word;
     }
+
 </style>
     <body class="d-flex flex-column">
         @include('includes.partials.demo')
