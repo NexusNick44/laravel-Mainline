@@ -21,11 +21,11 @@
         {{ style(mix('css/frontend.css')) }}
 
         @stack('after-styles')
-        <link href="img/h_Favicon.png" rel="icon" />
+        <link href="/img/ml_favicon.ico" rel="icon" />
     </head>
 <style>
     :root {
-        --main-brand-color: #B50000;
+        --main-brand-color: #f60;
     }
 
     .dropdown-menu{
@@ -65,6 +65,9 @@
     html,
     body {
         height: 100%;
+        font-family: Museo,Arial!important;
+        font-size: 14px;
+        line-height: 1.42857;
     }
 
     #page-content {
@@ -75,8 +78,7 @@
         flex-shrink: none;
     }
 
-    .footer-wrapper
-    {
+    .footer-wrapper {
         background-color: #818383;
     }
 
@@ -88,6 +90,25 @@
     }
     .card-block {
         word-wrap: break-word;
+    }
+
+    .logo{
+        background-image: url(/img/ml-logo_204.jpg);
+        background-repeat: no-repeat;
+        height: 48px;
+        width: 204px;
+        background-size: 204px auto;
+        cursor: pointer;
+        display: inline-block;
+    }
+
+    .logo:hover {
+        background-position: 0 -60px;
+    }
+
+    .logo-text {
+        font-size: 18px;
+        color: #5a5a5a;
     }
 
 </style>

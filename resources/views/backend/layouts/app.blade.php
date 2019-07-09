@@ -21,6 +21,9 @@
     {{ style(mix('css/backend.css')) }}
 
     @stack('after-styles')
+    <link href="/img/ml_favicon.ico" rel="icon" />
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.19/css/jquery.dataTables.css">
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/buttons/1.5.4/css/buttons.dataTables.min.css">
 </head>
 
 <body class="{{ config('backend.body_classes') }}">
@@ -57,5 +60,33 @@
     {!! script(mix('js/vendor.js')) !!}
     {!! script(mix('js/backend.js')) !!}
     @stack('after-scripts')
+    <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.10.19/js/jquery.dataTables.js"></script>
+    <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/buttons/1.5.4/js/dataTables.buttons.min.js"></script>
+    <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/buttons/1.5.4/js/buttons.print.min.js"></script>
+    <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/buttons/1.5.4/js/buttons.html5.min.js"></script>
+    <script>
+        $(document).ready(function() {
+            $('#example').DataTable( {
+                "ajax": "products/all",
+                dom: 'Bfrtip',
+                "buttons": [
+                    {   extend: 'print',
+                        title: '',
+                    },
+                    'csvHtml5'
+                ],
+                "columns": [
+                    { "data": "product_id" },
+                    { "data": "description" },
+                    { "data": function (data) {
+                                return '<a href="products/'+data.product_id+'" id="'+data.product_id+'" style="color: #FFFFFF" class="mr-3 btn btn-warning btn-sm">Edit "'+data.product_id+'"</a>'
+                                    // + '<a onclick="orderedItems(this)" id="'+data.mainline_id+'" style="color: #FFFFFF" class="btn btn-warning btn-sm" > Edit Specific Pricing</a>'
+                        }
+                    }
+                ]
+            } );
+        } );
+    </script>
+
 </body>
 </html>

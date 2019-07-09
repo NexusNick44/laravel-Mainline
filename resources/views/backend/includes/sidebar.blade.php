@@ -91,7 +91,7 @@
                 <a class="nav-link nav-dropdown-toggle {{
                             active_class(Active::checkUriPattern('admin/shop-front*'))
                         }}" href="#">
-                    <i class="nav-icon fas fa-shopping-bag"></i> Shop
+                    <i class="nav-icon fas fa-store"></i> Shop Display
                 </a>
 
                 <ul class="nav-dropdown-items">
@@ -102,15 +102,45 @@
                             Shop Front
                         </a>
                     </li>
-                    <li class="nav-item">
-                        <a class="nav-link {{
-                            active_class(Active::checkUriPattern('admin/log-viewer/logs*'))
-                        }}" href="{{ route('log-viewer::logs.list') }}">
-                            Bottom Cards
-                        </a>
-                    </li>
+{{--                    <li class="nav-item">--}}
+{{--                        <a class="nav-link {{--}}
+{{--                            active_class(Active::checkUriPattern('admin/log-viewer/logs*'))--}}
+{{--                        }}" href="{{ route('log-viewer::logs.list') }}">--}}
+{{--                            Bottom Cards--}}
+{{--                        </a>--}}
+{{--                    </li>--}}
                 </ul>
             </li>
+
+            <li class="divider"></li>
+
+            <li class="nav-item nav-dropdown {{
+                    active_class(Active::checkUriPattern('admin/products*'), 'open')
+                }}">
+                <a class="nav-link nav-dropdown-toggle {{
+                            active_class(Active::checkUriPattern('admin/products*'))
+                        }}" href="#">
+                    <i class="nav-icon fas fa-shopping-bag"></i> Products
+                </a>
+
+                <ul class="nav-dropdown-items">
+                    <li class="nav-item">
+                        <a class="nav-link {{
+                            active_class(Active::checkUriPattern('admin/products'))
+                        }}" href="{{ route('admin.products') }}">
+                            Shop Products
+                        </a>
+                    </li>
+                    {{--                    <li class="nav-item">--}}
+                    {{--                        <a class="nav-link {{--}}
+                    {{--                            active_class(Active::checkUriPattern('admin/log-viewer/logs*'))--}}
+                    {{--                        }}" href="{{ route('log-viewer::logs.list') }}">--}}
+                    {{--                            Bottom Cards--}}
+                    {{--                        </a>--}}
+                    {{--                    </li>--}}
+                </ul>
+            </li>
+
         </ul>
     </nav>
 

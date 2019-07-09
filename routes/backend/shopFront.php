@@ -1,11 +1,8 @@
 <?php
 
-
-use App\Http\Controllers\Backend\ShopFrontController;
-
 // All route names are prefixed with 'admin.'.
 
-Route::get('shop-front', [ShopFrontController::class, 'index'])->name('shop-front');
+Route::get('shop-front', 'ShopFrontController@index')->name('shop-front');
 
 Route::get('shop-front/blocks', 'ShopFrontController@editBlocks')->name('shop-front.editBlocks');
 Route::post('shop-front/blocks/update', 'ShopFrontController@updateBlocks')->name('shop-front.updateBlocks');

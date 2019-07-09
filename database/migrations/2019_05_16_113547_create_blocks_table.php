@@ -17,7 +17,7 @@ class CreateBlocksTable extends Migration
             $table->increments('id');
             $table->string('title', '150');
             $table->string('text', '255');
-            $table->string('img_url', '255');
+            $table->string('img_url', '255')->nullable();
             $table->timestamps();
         });
     }

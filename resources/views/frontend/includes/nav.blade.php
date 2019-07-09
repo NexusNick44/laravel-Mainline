@@ -1,8 +1,10 @@
-{{--<div class="container">--}}
-    <nav class="navbar navbar-expand-md navbar-light pt-0 pb-0 pr-lg-5 pl-lg-5">
+<div class="container">
+    <nav class="navbar navbar-expand-md navbar-light pt-0 pb-0">
         <h3 class="my-auto">
             <a href="{{ route('frontend.index') }}" class="navbar-brand">
-                <img src="/img/frontend/logo.png" alt="Husqui_Logo">
+{{--                <img src="/img/frontend/logo.png" alt="Husqui_Logo">--}}
+                <div class="logo"></div>
+                <div class="logo-text">picture framing supplies</div>
             </a>
         </h3>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarCollapse">
@@ -87,22 +89,21 @@
     {{--        </div>--}}
         </div>
     </nav>
-    <nav class="navbar navbar-expand-md navbar-light justify-content-start red-bottom pt-0">
-        <div class="pl-5">
-            <ul class="navbar-nav flex-lg-row flex-sm-grow-0 flex-row">
-                <li class="nav-item active">
-                    <a class="nav-link" href="#">Husqui Skirting Boards</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="#">Husqui Architrave</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="#">Husqui Scotia</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="#">Husqui Accessories</a>
-                </li>
-            </ul>
-        </div>
+    <nav class="navbar navbar-expand-md navbar-light justify-content-start pt-0">
+        <ul class="navbar-nav flex-lg-row flex-sm-grow-0 flex-row">
+            <li class="nav-item active">
+                <a class="nav-link" href="#">Husqui Skirting Boards</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="#">Husqui Architrave</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="#">Husqui Scotia</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="#">Husqui Accessories</a>
+            </li>
+        </ul>
     </nav>
-{{--</div>--}}
+</div>
+<div class="red-bottom"></div>

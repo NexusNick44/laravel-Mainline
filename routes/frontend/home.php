@@ -1,6 +1,7 @@
 <?php
 
-use App\Http\Controllers\Frontend\HomeController;
+use App\Http\Controllers\Frontend\ShopController;
+use App\Http\Controllers\Frontend\ProductController;
 use App\Http\Controllers\Frontend\ContactController;
 use App\Http\Controllers\Frontend\User\AccountController;
 use App\Http\Controllers\Frontend\User\ProfileController;
@@ -10,10 +11,17 @@ use App\Http\Controllers\Frontend\User\DashboardController;
  * Frontend Controllers
  * All route names are prefixed with 'frontend.'.
  */
-Route::get('/', [HomeController::class, 'index'])->name('index');
-Route::get('/buy', [HomeController::class, 'buy'])->name('buy');
+Route::get('/', [ShopController::class, 'index'])->name('index');
+Route::get('/buy', [ShopController::class, 'buy'])->name('buy');
 Route::get('contact', [ContactController::class, 'index'])->name('contact');
 Route::post('contact/send', [ContactController::class, 'send'])->name('contact.send');
+//Route::resource('k', 'HomeController');
+
+
+Route::get('product/{product_id}', [ProductController::class, 'getProduct'])->name('product');
+
+
+
 
 /*
  * These frontend controllers require the user to be logged in

@@ -48,6 +48,11 @@ return [
             'logs' => 'Logs',
         ],
 
+        'products' => [
+            'products' => 'Products',
+            //'edit' => 'Edit products',
+        ],
+
         'sidebar' => [
             'dashboard' => 'Dashboard',
             'general' => 'General',
