@@ -145,25 +145,24 @@
 
         <script>
 
-
-
                 $("#add_to_basket").click(function (e) {
                     e.preventDefault();
 
                     var unit_type = $("#unit_type").val()
                     switch(unit_type) {
-                        case 'Box':
-                            // $("#price").val(Number($("#box_price").text() * $("#boxed_quantity").text()).toFixed(2))
+                        @if(isset($product))
+                            case 'Box':
                                 $("#price").val(Number({{ $product->price_2 }} * {{ $product->boxed_quantity }}).toFixed(2))
-                            break;
-                        case 'Pack':
-                            $("#price").val(Number({{ $product->pack_price }} * {{ $product->pack_quantity }}).toFixed(2))
-                            break;
-                        case 'Length':
-                            $("#price").val(Number({{ $product->price }} * {{ $product->length }}).toFixed(2))
-                            break;
-                        default:
-                            $("#price").val({{ $product->price }})
+                                break;
+                            case 'Pack':
+                                $("#price").val(Number({{ $product->pack_price }} * {{ $product->pack_quantity }}).toFixed(2))
+                                break;
+                            case 'Length':
+                                $("#price").val(Number({{ $product->price }} * {{ isset($product->length) ? $row->length : 2.9 }}).toFixed(2))
+                                break;
+                            default:
+                                $("#price").val({{ $product->price }})
+                        @endif
                     }
 
                     var product = $("#product_form").serialize()

@@ -1,11 +1,10 @@
 @extends('frontend.layouts.app')
 
-@section('title', app_name() . ' | ' . __('navs.general.home'))
+@section('title', app_name() . ' | ' . $product->product_id )
 
 @section('content')
     <div id="page-content">
         <div class="container mt-2">
-
             <div class="row flex-column-reverse flex-md-row">
                 <div class="col-lg-6 col-md-6 col-sm-12">
                     <div class="card border-0">
@@ -57,7 +56,7 @@
                                             class="float-right font-weight-bold text-dark"><span id="pack_quantity">{{ $product->pack_quantity }}</span>m</span>
                                     </p>
                                     <p class="card-text m-0 text-black-50">Length: <span
-                                            class="float-right font-weight-bold text-dark"><span id="length">{{ $product->length }}</span>m</span>
+                                            class="float-right font-weight-bold text-dark"><span id="length">{{ isset($product->length) ? $row->length : 2.9 }}</span>m</span>
                                     </p>
                                 </div>
                             </div>
@@ -86,7 +85,7 @@
                                 <form id="product_form" method="POST">
                                     @csrf
                                     <input name="product_id" value="{{ $product->product_id }}" hidden>
-                                    <input id="price" name="price" value="" hidden>
+                                    <input id="price" name="price" value="1" hidden>
                                     <div class="card-body">
                                         <p class="card-text m-0">Order by
                                             <span class="float-right">

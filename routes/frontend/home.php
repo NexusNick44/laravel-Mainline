@@ -20,6 +20,7 @@ Route::post('contact/send', [ContactController::class, 'send'])->name('contact.s
 
 Route::get('product/{product_id}', [ProductController::class, 'getProduct'])->name('product');
 Route::post('addtocart', [ShopController::class, 'buy'])->name('product');
+Route::get('cart', [ShopController::class, 'cart'])->name('cart');
 
 
 
