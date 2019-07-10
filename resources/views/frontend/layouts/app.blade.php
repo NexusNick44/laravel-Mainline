@@ -111,6 +111,14 @@
         color: #5a5a5a;
     }
 
+    .orange-text{
+        color: #f60;
+    }
+
+    .btn-orange{
+        background-color: #f60;
+    }
+
 </style>
     <body class="d-flex flex-column">
         @include('includes.partials.demo')
@@ -134,6 +142,121 @@
         {!! script(mix('js/vendor.js')) !!}
         {!! script(mix('js/frontend.js')) !!}
         @stack('after-scripts')
+
+        <script>
+            $(function() {
+
+
+                $("#add_to_basket").click(function (e) {
+                    e.preventDefault();
+
+                    var unit_type = $("#unit_type").val()
+                    switch(unit_type) {
+                        case 'Box':
+                            // $("#price").val(Number($("#box_price").text() * $("#boxed_quantity").text()).toFixed(2))
+                                $("#price").val(Number({{ $product->price_2 }} * {{ $product->boxed_quantity }}).toFixed(2))
+                            break;
+                        case 'Pack':
+                            $("#price").val(Number({{ $product->pack_price }} * {{ $product->pack_quantity }}).toFixed(2))
+                            break;
+                        case 'Length':
+                            $("#price").val(Number({{ $product->price }} * {{ $product->length }}).toFixed(2))
+                            break;
+                        default:
+                            $("#price").val({{ $product->price }})
+                    }
+
+                    var product = $("#product_form").serialize()
+
+                    $.ajax({
+                        type: 'post',
+                        url: '/cart',
+                        data: product,
+                        success: function (data) {
+                            console.log('YES!!!')
+                        }
+                    }).fail(function () {
+                        console.log('NO!!!')
+                    })
+
+                    console.log(product)
+                });
+
+
+
+                $('.btn-number').click(function(e){
+                    e.preventDefault();
+
+                    fieldName = $(this).attr('data-field');
+                    type      = $(this).attr('data-type');
+                    var input = $("input[name='"+fieldName+"']");
+                    var currentVal = parseInt(input.val());
+                    if (!isNaN(currentVal)) {
+                        if(type == 'minus') {
+
+                            if(currentVal > input.attr('min')) {
+                                input.val(currentVal - 1).change();
+                            }
+                            if(parseInt(input.val()) == input.attr('min')) {
+                                $(this).attr('disabled', true);
+                            }
+
+                        } else if(type == 'plus') {
+
+                            if(currentVal < input.attr('max')) {
+                                input.val(currentVal + 1).change();
+                            }
+                            if(parseInt(input.val()) == input.attr('max')) {
+                                $(this).attr('disabled', true);
+                            }
+
+                        }
+                    } else {
+                        input.val(0);
+                    }
+                });
+                $('.input-number').focusin(function(){
+                    $(this).data('oldValue', $(this).val());
+                });
+                $('.input-number').change(function() {
+
+                    minValue =  parseInt($(this).attr('min'));
+                    maxValue =  parseInt($(this).attr('max'));
+                    valueCurrent = parseInt($(this).val());
+
+                    name = $(this).attr('name');
+                    if(valueCurrent >= minValue) {
+                        $(".btn-number[data-type='minus'][data-field='"+name+"']").removeAttr('disabled')
+                    } else {
+                        alert('Sorry, the minimum value was reached');
+                        $(this).val($(this).data('oldValue'));
+                    }
+                    if(valueCurrent <= maxValue) {
+                        $(".btn-number[data-type='plus'][data-field='"+name+"']").removeAttr('disabled')
+                    } else {
+                        alert('Sorry, the maximum value was reached');
+                        $(this).val($(this).data('oldValue'));
+                    }
+
+
+                });
+                $(".input-number").keydown(function (e) {
+                    // Allow: backspace, delete, tab, escape, enter and .
+                    if ($.inArray(e.keyCode, [46, 8, 9, 27, 13, 190]) !== -1 ||
+                        // Allow: Ctrl+A
+                        (e.keyCode == 65 && e.ctrlKey === true) ||
+                        // Allow: home, end, left, right
+                        (e.keyCode >= 35 && e.keyCode <= 39)) {
+                        // let it happen, don't do anything
+                        return;
+                    }
+                    // Ensure that it is a number and stop the keypress
+                    if ((e.shiftKey || (e.keyCode < 48 || e.keyCode > 57)) && (e.keyCode < 96 || e.keyCode > 105)) {
+                        e.preventDefault();
+                    }
+                });
+            });
+        </script>
 
         @include('includes.partials.ga')
     </body>

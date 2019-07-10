@@ -17,7 +17,7 @@ class ProductController extends Controller
         if(empty($product))
             return redirect('/');
 
-        return view('frontend.auth.product.show', compact('product'));
+        return view('frontend.product.show', compact('product'));
     }
 
 

@@ -12,13 +12,14 @@ use App\Http\Controllers\Frontend\User\DashboardController;
  * All route names are prefixed with 'frontend.'.
  */
 Route::get('/', [ShopController::class, 'index'])->name('index');
-Route::get('/buy', [ShopController::class, 'buy'])->name('buy');
+//Route::get('/buy', [ShopController::class, 'buy'])->name('buy');
 Route::get('contact', [ContactController::class, 'index'])->name('contact');
 Route::post('contact/send', [ContactController::class, 'send'])->name('contact.send');
 //Route::resource('k', 'HomeController');
 
 
 Route::get('product/{product_id}', [ProductController::class, 'getProduct'])->name('product');
+Route::post('cart', [ShopController::class, 'buy'])->name('product');
 
 
 
