@@ -34,11 +34,12 @@ class ShopController extends Controller
 
         Cart::destroy();
 //        //Cart::add('293ad', 'Product 1', 1, 9.99, 550);
-        Cart::add($request->input('product_id'), $request->input('product_id'), $request->input('quant'), $request->input('price'), null, ['unit_type' => $request->input('unit_type')]);
+        Cart::add($request->input('product_id'), $request->input('product_id'),
+            $request->input('quant'), $request->input('price'), null, ['unit_type' => $request->input('unit_type')]);
 //        //return view('frontend.index');
 //        Cart::setDiscount("85cf2e88abe296bb4bd4c5546b7d3081", 100);
 //        //Cart::store('test2');
-//        return Cart::content() . Cart::discount();
+        return Cart::count();
         return view('frontend.cart.cart');
 
     }

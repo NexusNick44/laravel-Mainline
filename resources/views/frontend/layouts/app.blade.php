@@ -144,7 +144,7 @@
         @stack('after-scripts')
 
         <script>
-            $(function() {
+
 
 
                 $("#add_to_basket").click(function (e) {
@@ -170,14 +170,19 @@
 
                     $.ajax({
                         type: 'post',
-                        url: '/cart',
+                        url: '/addtocart',
                         data: product,
                         success: function (data) {
-                            console.log('YES!!!')
+                            $('#div').load(" #div > *")
                         }
+                    }).done(function () {
+
+
                     }).fail(function () {
                         console.log('NO!!!')
                     })
+
+
 
                     console.log(product)
                 });
@@ -255,7 +260,7 @@
                         e.preventDefault();
                     }
                 });
-            });
+
         </script>
 
         @include('includes.partials.ga')

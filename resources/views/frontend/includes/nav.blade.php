@@ -54,9 +54,10 @@
                         </div>
                     </li>
                 @endguest
-
-                <li class="nav-item"><a href="{{route('frontend.auth.login')}}" class="nav-link">
-                        <i class="fas fa-shopping-basket"></i><span class="badge badge-brand-colour ml-1">4</span> Basket</a></li>
+                <div id="div">
+                    <li class="nav-item"><a href="{{route('frontend.auth.login')}}" class="nav-link">
+                        <i class="fas fa-shopping-basket"></i><span id="basket_badge" class="badge badge-brand-colour ml-1">{{ Cart::count() }}</span> Basket</a></li>
+                </div>
                 <li class="nav-item"><a href="tel:01949861000" class="nav-link">
                         <i class="fa fa-phone thin-pad-right color-brand-light" aria-hidden="true"></i> 01949 861000</a></li>
 
