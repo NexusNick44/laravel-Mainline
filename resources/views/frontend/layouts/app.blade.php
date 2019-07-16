@@ -158,15 +158,13 @@
                                 $("#price").val(Number({{ $product->pack_price }} * {{ $product->pack_quantity }}).toFixed(2))
                                 break;
                             case 'Length':
-                                $("#price").val(Number({{ $product->price }} * {{ isset($product->length) ? $row->length : 2.9 }}).toFixed(2))
+                                $("#price").val(Number({{ $product->price }} * {{ isset($product->length) ? $product->length : 2.9 }}).toFixed(2))
                                 break;
                             default:
                                 $("#price").val({{ $product->price }})
                         @endif
                     }
-
                     var product = $("#product_form").serialize()
-
                     $.ajax({
                         type: 'post',
                         url: '/addtocart',
@@ -176,21 +174,46 @@
                         }
                     }).done(function () {
 
-
                     }).fail(function () {
                         console.log('NO!!!')
                     })
-
-
-
                     console.log(product)
                 });
 
+                //Nav Search
+                $("#product_id").on('keydown ', function(event){
+                    if(event.which === 13){
+                        getProduct($("#product_id").val())
+                    }
+                });
 
+                function getProduct(product_id){
 
+                    if(formatProductId(product_id)){
+                        window.location.href = "/product/"+formatProductId(product_id);
+                    }
+                }
+
+                function formatProductId(product_id){
+                    //console.log(product_id)
+                    var reg = '[a-zA-Z0-9]{3}[-]{0,1}\\d{4}';
+                    if(product_id.length == 7 && product_id.match(reg)){
+                        var result = [product_id.slice(0, 3), product_id.slice(3, 7)].join('-');
+                        console.log('formatProductId '+result)
+                        return result
+                    } else if (product_id.length == 8 && product_id.match(reg)) {
+                        return product_id
+                    }
+                }
+
+                $("#search_button").click(function () {
+                    getProduct($("#product_id").val())
+                });
+                //Nav Search end
+
+                //Product Counter
                 $('.btn-number').click(function(e){
                     e.preventDefault();
-
                     fieldName = $(this).attr('data-field');
                     type      = $(this).attr('data-type');
                     var input = $("input[name='"+fieldName+"']");
@@ -219,16 +242,18 @@
                         input.val(0);
                     }
                 });
+
                 $('.input-number').focusin(function(){
                     $(this).data('oldValue', $(this).val());
                 });
+
                 $('.input-number').change(function() {
 
                     minValue =  parseInt($(this).attr('min'));
                     maxValue =  parseInt($(this).attr('max'));
                     valueCurrent = parseInt($(this).val());
 
-                    name = $(this).attr('name');
+                    var name = $(this).attr('name');
                     if(valueCurrent >= minValue) {
                         $(".btn-number[data-type='minus'][data-field='"+name+"']").removeAttr('disabled')
                     } else {
@@ -241,9 +266,8 @@
                         alert('Sorry, the maximum value was reached');
                         $(this).val($(this).data('oldValue'));
                     }
-
-
                 });
+
                 $(".input-number").keydown(function (e) {
                     // Allow: backspace, delete, tab, escape, enter and .
                     if ($.inArray(e.keyCode, [46, 8, 9, 27, 13, 190]) !== -1 ||
@@ -259,7 +283,7 @@
                         e.preventDefault();
                     }
                 });
-
+                //Product Counter end
         </script>
 
         @include('includes.partials.ga')

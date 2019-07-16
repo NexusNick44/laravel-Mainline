@@ -68,14 +68,14 @@
                 <li class="nav-item"><a href="{{route('frontend.contact')}}" class="nav-link {{ active_class(Active::checkRoute('frontend.contact')) }}">
                         <i class="far fa-address-book"></i> @lang('navs.frontend.contact')</a></li>
             </ul>
-            <form class="form-inline ml-auto">
-                <div class="input-group">
-                    <input type="text" class="form-control border-dark" placeholder="Search">
+{{--            <form class="form-inline ml-auto" id="search_form">--}}
+                <div class="input-group w-25">
+                    <input id="product_id" type="text" class="form-control border-dark" placeholder="Search">
                     <div class="input-group-append">
-                        <button class="btn btn-outline-secondary" type="button"><i class="fa fa-search"></i></button>
+                        <button id="search_button" class="btn btn-outline-secondary" type="button"><i class="fa fa-search"></i></button>
                     </div>
                 </div>
-            </form>
+{{--            </form>--}}
     {{--        <div class="input-group">--}}
     {{--            <ul class="navbar-nav small my-auto">--}}
     {{--                <li class="nav-item active">--}}

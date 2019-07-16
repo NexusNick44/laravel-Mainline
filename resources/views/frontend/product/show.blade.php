@@ -56,7 +56,7 @@
                                             class="float-right font-weight-bold text-dark"><span id="pack_quantity">{{ $product->pack_quantity }}</span>m</span>
                                     </p>
                                     <p class="card-text m-0 text-black-50">Length: <span
-                                            class="float-right font-weight-bold text-dark"><span id="length">{{ isset($product->length) ? $row->length : 2.9 }}</span>m</span>
+                                            class="float-right font-weight-bold text-dark"><span id="length">{{ isset($product->length) ? $product->length : 2.9 }}</span>m</span>
                                     </p>
                                 </div>
                             </div>

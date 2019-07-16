@@ -15,7 +15,7 @@ class ProductController extends Controller
     {
         $product = Products::where('product_id', $product_id)->first();
         if(empty($product))
-            return redirect('/');
+            return redirect('/')->withFlashWarning('<h3>Search Found No Results!</h3>');
 
         return view('frontend.product.show', compact('product'));
     }
