@@ -119,6 +119,89 @@
         background-color: #f60;
     }
 
+    /* adds some margin below the link sets  */
+    .navbar .dropdown-menu div[class*="col"] {
+        margin-bottom:1rem;
+    }
+
+    .navbar #navbarSupportedContent .dropdown-menu {
+        border:none;
+        background-color:#818383!important;
+    }
+
+    #navbarSupportedContent>ul>li:hover{
+        background-color:#818383!important;
+    }
+
+    .dropdown>#navbarDropdown:hover{
+        /*background-color:#818383!important;*/
+        color: #ffffff;
+    }
+
+    .navbar-nav>.nav-item>.nav-link{
+        color: #5a5a5a;
+    }
+
+    .navbar #navbarSupportedContent .navbar-nav>.nav-item>.nav-link:hover {
+        color: #f60;
+    }
+
+    .nav-link{
+        color: #ffffff;
+    }
+
+    .nav-link:hover{
+        color: #f60;
+    }
+
+
+
+    /* breakpoint and up - mega dropdown styles */
+    @media screen and (min-width: 992px) {
+
+        /* remove the padding from the navbar so the dropdown hover state is not broken */
+        .navbar {
+            padding-top:0px;
+            padding-bottom:0px;
+        }
+
+        /* remove the padding from the nav-item and add some margin to give some breathing room on hovers */
+        .navbar .nav-item {
+            padding:.5rem .5rem;
+            margin:0 .25rem;
+        }
+
+        /* makes the dropdown full width  */
+        .navbar #navbarSupportedContent .dropdown {position:static;}
+
+        .navbar #navbarSupportedContent .dropdown-menu {
+            width:100%;
+            left:0;
+            right:0;
+            /*  height of nav-item  */
+            top:45px;
+            display:block;
+            visibility: hidden;
+            opacity: 0;
+            transition: visibility 0s, opacity 0.3s linear;
+        }
+
+        /* shows the dropdown menu on hover */
+        .navbar  #navbarSupportedContent .dropdown:hover .dropdown-menu, .navbar .dropdown .dropdown-menu:hover {
+            display:block;
+            visibility: visible;
+            opacity: 1;
+            transition: visibility 0s, opacity 0.3s linear;
+        }
+
+        .navbar #navbarSupportedContent .dropdown-menu {
+            border: 1px solid rgba(0,0,0,.15);
+            background-color: #fff;
+
+        }
+
+    }
+
 </style>
     <body class="d-flex flex-column">
         @include('includes.partials.demo')
@@ -145,25 +228,55 @@
 
         <script>
 
+            function unitPrice(){
+                var unit_type = $("#unit_type").val()
+                switch(unit_type) {
+                    @if(isset($product))
+                    case 'Box':
+                        return Number({{ $product->price_2 }} * {{ $product->boxed_quantity }}).toFixed(2)
+                        break;
+                    case 'Pack':
+                        return Number({{ $product->pack_price }} * {{ $product->pack_quantity }}).toFixed(2)
+                        break;
+                    case 'Length':
+                        return Number({{ $product->price }} * {{ isset($product->length) ? $product->length : 2.9 }}).toFixed(2)
+                        break;
+                    default:
+                        return {{ $product->price }}
+                    @endif
+                }
+            }
+
+            function unitQty(){
+                var unit_type = $("#unit_type").val()
+                switch(unit_type) {
+                    @if(isset($product))
+                    case 'Box':
+                        return Number($("#quant").val() * {{ $product->boxed_quantity }}).toFixed(2)
+                        break;
+                    case 'Pack':
+                        return Number($("#quant").val() * {{ $product->pack_quantity }}).toFixed(2)
+                        break;
+                    case 'Length':
+                        return Number($("#quant").val() * {{ isset($product->length) ? $product->length : 2.9 }}).toFixed(2)
+                        break;
+                    default:
+                        return {{ $product->price }}
+                    @endif
+                }
+            }
+
+            function displayCostAndQty(){
+
+                $("#length_qty").text('')
+                $("#length_qty").text(unitQty()+'m').append('<span id="total_cost" class="float-right font-weight-bold">'+(unitPrice()*$("#quant").val()).toFixed(2)+'</span>')
+            }
+
                 $("#add_to_basket").click(function (e) {
                     e.preventDefault();
 
-                    var unit_type = $("#unit_type").val()
-                    switch(unit_type) {
-                        @if(isset($product))
-                            case 'Box':
-                                $("#price").val(Number({{ $product->price_2 }} * {{ $product->boxed_quantity }}).toFixed(2))
-                                break;
-                            case 'Pack':
-                                $("#price").val(Number({{ $product->pack_price }} * {{ $product->pack_quantity }}).toFixed(2))
-                                break;
-                            case 'Length':
-                                $("#price").val(Number({{ $product->price }} * {{ isset($product->length) ? $product->length : 2.9 }}).toFixed(2))
-                                break;
-                            default:
-                                $("#price").val({{ $product->price }})
-                        @endif
-                    }
+                    $("#price").val(unitPrice())
+
                     var product = $("#product_form").serialize()
                     $.ajax({
                         type: 'post',
@@ -284,6 +397,57 @@
                     }
                 });
                 //Product Counter end
+
+
+                $(document).ready(function() {
+                    // executes when HTML-Document is loaded and DOM is ready
+
+                    displayCostAndQty()
+
+                    $(".navbar #navbarSupportedContent .navbar-nav>.nav-item>.nav-link").mouseover(function () {
+                        $(this).css("color", '#f60');
+                    })
+
+                    $(".navbar #navbarSupportedContent .navbar-nav>.nav-item>.nav-link").mouseleave(function () {
+                        $(this).css("color", '#fff');
+                    })
+
+                    $('.navbar  #navbarSupportedContent .dropdown').mouseleave(function () {
+                        $( '.navbar  #navbarSupportedContent .dropdown>a' ).css("color", '#5a5a5a');
+                    });
+
+                    $("a.nav-link").mouseleave(function () {
+                        //$(this).css("color", '#5a5a5a');
+                    })
+
+                    $(".navbar #navbarSupportedContent .navbar-nav>.nav-item>.nav-link").mouseleave(function () {
+                        $(this).css("color", '#ffffff');
+                    })
+
+// breakpoint and up
+                    $(window).resize(function(){
+                        if ($(window).width() >= 980){
+
+                            // when you hover a toggle show its dropdown menu
+                            $(".navbar .dropdown-toggle").hover(function () {
+                                $(this).parent().toggleClass("show");
+                                $(this).parent().find(".dropdown-menu").toggleClass("show");
+                            });
+
+                            // hide the menu when the mouse leaves the dropdown
+                            $( ".navbar .dropdown-menu" ).mouseleave(function() {
+                                $(this).removeClass("show");
+                            });
+
+                            // do something here
+                        }
+                    });
+
+
+
+// document ready
+                });
+
         </script>
 
         @include('includes.partials.ga')

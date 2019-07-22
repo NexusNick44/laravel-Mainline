@@ -89,7 +89,7 @@
                                     <div class="card-body">
                                         <p class="card-text m-0">Order by
                                             <span class="float-right">
-                                                <select id="unit_type" class="form-control" name="unit_type">
+                                                <select onchange="displayCostAndQty()" id="unit_type" class="form-control" name="unit_type">
                                                     <option>Box</option>
                                                     <option selected>Pack</option>
                                                     <option>Length</option>
@@ -106,13 +106,14 @@
                                                     <span class="fas fa-minus-circle orange-text"></span>
                                                 </button>
                                             </span>
-                                            <input type="text" name="quant" class="form-control input-number" value="1" min="1" max="100">
+                                            <input onchange="displayCostAndQty()" id="quant" type="text" name="quant" class="form-control input-number" value="1" min="1" max="100">
                                             <span class="input-group-btn">
                                                 <button type="button" class="btn btn-default btn-number border" data-type="plus" data-field="quant">
                                                     <span class="fas fa-plus-circle orange-text"></span>
                                                 </button>
                                             </span>
                                         </div>
+                                        <div><p id="length_qty" class="w-100"></p></div>
                                         <button id="add_to_basket" class="btn btn-orange text-white mt-3 btn-block" type="submit">
                                             <i class="fas fa-shopping-basket text-white"></i> Add to Basket
                                         </button>
