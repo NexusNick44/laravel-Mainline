@@ -230,8 +230,13 @@
 
     <script>
 
-        function unitPrice() {
-            var unit_type = $("#unit_type").val()
+        function unitPrice(unit=null) {
+            if(unit == null){
+                var unit_type = $("#unit_type").val()
+            } else {
+                var unit_type = unit
+            }
+
             switch (unit_type) {
                 @if(isset($product))
                 case 'Box':
@@ -249,17 +254,19 @@
             }
         }
 
-        function unitQty() {
-            var unit_type = $("#unit_type").val()
+        function unitQty(unit=null) {
+            if(unit == null){
+                var unit_type = $("#unit_type").val()
+            } else {
+                var unit_type = unit
+            }
+
             switch (unit_type) {
                 @if(isset($product))
                 case 'Box':
                     //fires basic product discount if box value is 2 or more
-                    if($("#quant").val() >= 2){
-                        basicProduct()
-                    } else {
+                    if($("#quant").val() < 2)
                         undoBasicProduct()
-                    }
                     return Number($("#quant").val() * {{ $product->boxed_quantity }}).toFixed(2)
                     break;
                 case 'Pack':
@@ -282,8 +289,6 @@
         }
 
         function basicProduct() {
-            //display modal to see if customer want's the discount
-            
             //check if the product is a basic product and deduct 20%
             if({{ isset( $product->basic_product) ? $product->basic_product : 0}}){
                 var deducted = {{ $product->price_2 }} * 20 / 100
@@ -299,8 +304,74 @@
             $("#length_qty").text(unitQty() + 'm')
                 .append('<span id="total_cost" class="float-right font-weight-bold">£' + (unitPrice() * $("#quant").val()).toFixed(2) + '</span>')
             //    call the better price function
+            betterPrice()
 
         }
+
+        function betterPrice(){
+            //evaluate if the price can be bettered
+            //display modal to see if customer want's the discount
+            //get boxed values
+            var totalBoxQyt = unitQty('Box') / $("#quant").val()
+            var totalBoxPrice = unitPrice('Box')
+            var totalPackQyt = unitQty('Pack') / $("#quant").val()
+            var totalPackPrice = unitPrice('Pack')
+            var totalLengthQyt = unitQty('Length') / $("#quant").val()
+            var totalLengthPrice = unitPrice('Length')
+
+            // console.log('Total Box Qty: ' + totalBoxQyt + ' Total Box Price: ' + Math.floor(totalBoxPrice))
+
+            console.log('Total Box Qty: ' + totalBoxQyt % totalPackQyt + ' Total Box Price: ' + Math.floor(totalBoxPrice))
+
+            var unit_type = $("#unit_type").val()
+
+            switch (unit_type) {
+                case 'Pack':
+                    if(unitQty() >= totalBoxQyt && unitPrice() >= Math.floor(totalBoxPrice)){
+                        $('#basicProductModal').modal('show')
+                    }
+                    break;
+                case 'Length':
+                    if(unitQty() <= totalPackQyt && unitPrice() <= totalPackPrice){
+                        $('#basicProductModal').modal('show')
+                    }
+                    break;
+                default:
+
+            }
+
+            if($("#unit_type").val() != 'Box'){
+                //console.log(unitQty('Box'))
+
+            } else {
+                if($("#quant").val() >= 2)
+                    basicProduct()
+            }
+        }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
         $("#add_to_basket").click(function (e) {
             e.preventDefault();
