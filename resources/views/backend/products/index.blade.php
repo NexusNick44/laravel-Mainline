@@ -7,7 +7,11 @@
         <div class="col-12">
             <div class="card">
                 <div class="card-header">
-                    <h3>Mainline Products</h3>
+                    <div class="row">
+                        <h3>Mainline Products</h3>
+                        <a href="" id="" style="color: #FFFFFF" class="btn btn-success ml-5"><i class="fas fa-plus-circle"></i> Add New</a>
+                    </div>
+
                 </div>
                 <div class="col-sm-3 col-sm-12">
                     <div class="card-body">

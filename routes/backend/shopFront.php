@@ -9,3 +9,6 @@ Route::post('shop-front/blocks/update', 'ShopFrontController@updateBlocks')->nam
 
 Route::get('shop-front/carousel', 'ShopFrontController@editCarousel')->name('shop-front.editCarousel');
 Route::post('shop-front/carousel/update', 'ShopFrontController@updateCarousel')->name('shop-front.updateCarousel');
+
+Route::get('shop-front/menu', 'ShopFrontController@editMenu')->name('shop-front.editMenu');
+Route::post('shop-front/menu/update', 'ShopFrontController@updateMenu')->name('shop-front.updateMenu');

@@ -265,11 +265,18 @@
                     @endif
                 }
             }
+            
+            function betterPrice() {
+
+            }
 
             function displayCostAndQty(){
 
                 $("#length_qty").text('')
-                $("#length_qty").text(unitQty()+'m').append('<span id="total_cost" class="float-right font-weight-bold">'+(unitPrice()*$("#quant").val()).toFixed(2)+'</span>')
+                $("#length_qty").text(unitQty()+'m')
+                    .append('<span id="total_cost" class="float-right font-weight-bold">£'+(unitPrice()*$("#quant").val()).toFixed(2)+'</span>')
+            //    call the better price function
+                betterPrice()
             }
 
                 $("#add_to_basket").click(function (e) {

@@ -79,7 +79,7 @@
                     { "data": "product_id" },
                     { "data": "description" },
                     { "data": function (data) {
-                                return '<a href="products/'+data.product_id+'" id="'+data.product_id+'" style="color: #FFFFFF" class="mr-3 btn btn-warning btn-sm">Edit "'+data.product_id+'"</a>'
+                                return '<a href="products/'+data.product_id+'" id="'+data.product_id+'" style="color: #FFFFFF" class="mr-3 btn btn-warning btn-sm"><i class="fas fa-user-edit"></i> Edit "'+data.product_id+'"</a>'
                                     // + '<a onclick="orderedItems(this)" id="'+data.mainline_id+'" style="color: #FFFFFF" class="btn btn-warning btn-sm" > Edit Specific Pricing</a>'
                         }
                     }

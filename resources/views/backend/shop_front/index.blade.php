@@ -7,14 +7,22 @@
         <div class="col-12">
             <div class="card">
                 <div class="card-header">
-                    Nav
+                    Nav Menu Bar
                 </div>
-                <div class="col-sm-3 col-sm-12">
-                    <div class="card-body">
-
+                <div class="row">
+                    <div class="col-sm-12 col-md-12">
+                        <div class="card-body">
+                            <h5 class="card-title">Edit The Menu Bar</h5>
+                            <img class="img-fluid" src="/img/backend/shop_front/menu_bar.png">
+                        </div>
+                    </div>
+                    <div class="col-sm-12 col-md-12">
+                        <div class="card-body">
+                            <p class="card-text">Change the menu text.</p>
+                            <a href="/admin/shop-front/blocks" class="btn btn-primary">Edit Menu</a>
+                        </div>
                     </div>
                 </div>
-
             </div>
         </div>
     </div>
