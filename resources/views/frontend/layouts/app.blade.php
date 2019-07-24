@@ -21,6 +21,7 @@
         {{ style(mix('css/frontend.css')) }}
 
         @stack('after-styles')
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.7.2/animate.min.css">
         <link href="/img/ml_favicon.ico" rel="icon"/>
     </head>
     <style>
@@ -283,21 +284,23 @@
                 @endif
             }
         }
-        
-        function undoBasicProduct() {
-            $("#box_price").text({{ $product->price_2 }})
-        }
 
-        function basicProduct() {
-            //check if the product is a basic product and deduct 20%
-            if({{ isset( $product->basic_product) ? $product->basic_product : 0}}){
-                var deducted = {{ $product->price_2 }} * 20 / 100
-                var newPrice = {{ $product->price_2 }} - deducted
-                console.log(newPrice.toFixed(2))
-                $("#box_price").text('')
-                $("#box_price").html('<s class="text-danger">{{ $product->price_2 }}</s> '+newPrice.toFixed(2))
+        @if(isset($product))
+            function undoBasicProduct() {
+                $("#box_price").text({{isset($product->price_2) }})
             }
-        }
+
+            function basicProduct() {
+                //check if the product is a basic product and deduct 20%
+                if({{ isset( $product->basic_product) ? $product->basic_product : 0}}){
+                    var deducted = {{ $product->price_2 }} * 20 / 100
+                    var newPrice = {{ $product->price_2 }} - deducted
+                    console.log(newPrice.toFixed(2))
+                    $("#box_price").text('')
+                    $("#box_price").html('<s class="text-danger">{{ $product->price_2 }}</s> '+newPrice.toFixed(2))
+                }
+            }
+        @endIf
 
         function displayCostAndQty() {
             $("#length_qty").text('')
@@ -357,24 +360,10 @@
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
         $("#add_to_basket").click(function (e) {
             e.preventDefault();
+
+            $('#div').removeClass('animated shake')
 
             $("#price").val(unitPrice())
 
@@ -385,6 +374,8 @@
                 data: product,
                 success: function (data) {
                     $('#div').load(" #div > *")
+                    $('#div').addClass('animated shake')
+
                 }
             }).done(function () {
 
