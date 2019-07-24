@@ -5,6 +5,7 @@
 @section('content')
     <div id="page-content">
         <div class="container mt-2">
+            <h3>Basket</h3>
             <table class="table table-hover">
                 <thead>
                     <tr>
@@ -18,7 +19,7 @@
                     @foreach(Cart::content() as $row)
                         <tr>
                             <td>
-                                <p><strong>{{ $row->name }}</strong></p>
+                                <p><strong><a class="orange-text" href="/product/{{ strtolower($row->name) }}">{{ $row->name }}</a></strong></p>
                                 <p>{{ $row->options->has('unit_type') ? $row->options->unit_type : '' }}</p>
                             </td>
                             <td>
