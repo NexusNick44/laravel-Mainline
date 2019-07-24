@@ -29,7 +29,7 @@
     </head>
 
     <body class="d-flex flex-column">
-    @include('includes.partials.demo')
+        @include('includes.partials.demo')
 
     <div id="app">
         @include('includes.partials.logged-in-as')
