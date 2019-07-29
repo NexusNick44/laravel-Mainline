@@ -1,4 +1,5 @@
 <script>
+
     function unitPrice(unit = null) {
         if (unit == null) {
             var unit_type = $("#unit_type").val()
@@ -24,6 +25,7 @@
     }
 
     function unitQty(unit = null) {
+
         if (unit == null) {
             var unit_type = $("#unit_type").val()
         } else {
@@ -54,21 +56,24 @@
     }
 
     @if(isset($product))
-    function undoBasicProduct() {
-        $("#box_price").text({{isset($product->price_2) }})
-    }
 
-    function basicProduct() {
-        //check if the product is a basic product and deduct 20%
-        if ({{ isset( $product->basic_product) ? $product->basic_product : 0}}) {
-            var deducted = {{ $product->price_2 }} *
-            20 / 100
-            var newPrice = {{ $product->price_2 }} -deducted
-            console.log(newPrice.toFixed(2))
-            $("#box_price").text('')
-            $("#box_price").html('<s class="text-danger">{{ $product->price_2 }}</s> ' + newPrice.toFixed(2))
+        function undoBasicProduct() {
+            $("#box_price").text({{ $product->price_2 }})
         }
-    }
+
+        function basicProduct(display = true) {
+            //check if the product is a basic product and deduct 20%
+            if ({{ isset( $product->basic_product) }}) {
+                var deducted = {{ $product->price_2 }} * 20 / 100
+                newPrice = {{ $product->price_2 }} - deducted
+                //console.log(newPrice.toFixed(2))
+                if(display){
+                    $("#box_price").text('')
+                    $("#box_price").html('<s class="text-danger">{{ $product->price_2 }}</s> ' + newPrice.toFixed(2))
+                }
+                return newPrice.toFixed(2)
+            }
+        }
 
     @endIf
 
@@ -92,16 +97,27 @@
         var totalLengthQyt = unitQty('Length') / $("#quant").val()
         var totalLengthPrice = unitPrice('Length')
 
-        // console.log('Total Box Qty: ' + totalBoxQyt + ' Total Box Price: ' + Math.floor(totalBoxPrice))
+        var costOfBoxes = (Math.ceil(unitQty() / totalBoxQyt) * totalBoxPrice).toFixed(2)
+        //checks if there's a basic product discount
+        if(Math.ceil(unitQty() / totalBoxQyt) >= 2){
 
-        console.log('Total Box Qty: ' + totalBoxQyt % totalPackQyt + ' Total Box Price: ' + Math.floor(totalBoxPrice))
+            costOfBoxes = (Math.ceil(unitQty() / totalBoxQyt) * (totalBoxQyt * basicProduct(false)) ).toFixed(2)
+            // console.log(Math.ceil(unitQty() / totalBoxQyt) + ' ' + totalBoxQyt + ' '  + basicProduct())
+            console.log(costOfBoxes)
+        }
 
+        //console.log((totalPackPrice * $("#quant").val()) + ' ' + costOfBoxes)
         var unit_type = $("#unit_type").val()
 
         switch (unit_type) {
             case 'Pack':
-                if (unitQty() >= totalBoxQyt && unitPrice() >= Math.floor(totalBoxPrice)) {
+                if ((totalPackPrice * $("#quant").val()) >= costOfBoxes) {
                     $('#basicProductModal').modal('show')
+                    $('#basicProductModal .modal-body').text('Cheaper')
+                }
+                else if ((totalPackPrice * $("#quant").val()) >= (costOfBoxes * 0.7)) {
+                    $('#basicProductModal').modal('show')
+                    $('#basicProductModal .modal-body').text('Consider')
                 }
                 break;
             case 'Length':
@@ -256,6 +272,8 @@
 
     $(document).ready(function () {
         // executes when HTML-Document is loaded and DOM is ready
+
+        var newPrice = null;
 
         displayCostAndQty()
 

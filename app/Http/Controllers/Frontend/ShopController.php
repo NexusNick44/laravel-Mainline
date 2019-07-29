@@ -32,7 +32,7 @@ class ShopController extends Controller
 
         $product =  $request->all();
 
-        //Cart::destroy();
+        Cart::destroy();
 //        //Cart::add('293ad', 'Product 1', 1, 9.99, 550);
         Cart::add($request->input('product_id'), $request->input('product_id'),
             $request->input('quant'), $request->input('price'), null, ['unit_type' => $request->input('unit_type')]);

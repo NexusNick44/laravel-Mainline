@@ -26,7 +26,7 @@
                                 <input class="form-control" type="text" value="{{ $row->qty }}">
                             </td>
                             <td>£ {{ $row->price }}</td>
-                            <td>£ {{ $row->total }}</td>
+                            <td>£ {{ $row->subtotal }}</td>
                         </tr>
                     @endforeach
                 </tbody>
