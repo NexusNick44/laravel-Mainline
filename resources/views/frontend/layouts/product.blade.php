@@ -63,7 +63,7 @@
 
         function basicProduct(display = true) {
             //check if the product is a basic product and deduct 20%
-            if ({{ isset( $product->basic_product) }}) {
+            if ({{ $product->basic_product }}) {
                 var deducted = {{ $product->price_2 }} * 20 / 100
                 newPrice = {{ $product->price_2 }} - deducted
                 //console.log(newPrice.toFixed(2))
@@ -74,6 +74,8 @@
                 }
                 return newPrice.toFixed(2)
             }
+            newPrice = false;
+            return $("#box_price").text()
         }
 
     @endIf
