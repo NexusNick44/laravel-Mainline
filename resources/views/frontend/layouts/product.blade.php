@@ -156,7 +156,7 @@
 
         $('#div').removeClass('animated shake')
 
-        $("#price").val(newPrice ? newPrice.toFixed(2) * unitQty() / $("#quant").val() : unitPrice())
+        $("#price").val(newPrice ? (newPrice.toFixed(2) * unitQty() / $("#quant").val()).toFixed(2) : unitPrice())
 
         var product = $("#product_form").serialize()
         $.ajax({
