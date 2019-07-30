@@ -1,5 +1,7 @@
 <script>
 
+    var newPrice = false;
+
     function unitPrice(unit = null) {
         if (unit == null) {
             var unit_type = $("#unit_type").val()
@@ -63,7 +65,7 @@
 
         function basicProduct(display = true) {
             //check if the product is a basic product and deduct 20%
-            if ({{ $product->basic_product }}) {
+            if ({{ $product->basic_product ? $product->basic_product : 0 }}) {
                 var deducted = {{ $product->price_2 }} * 20 / 100
                 newPrice = {{ $product->price_2 }} - deducted
                 //console.log(newPrice.toFixed(2))
@@ -287,7 +289,7 @@
     $(document).ready(function () {
         // executes when HTML-Document is loaded and DOM is ready
 
-        var newPrice = false;
+
         var unit_change = ''
         displayCostAndQty()
 
