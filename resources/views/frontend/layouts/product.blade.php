@@ -305,8 +305,8 @@
             $('.navbar  #navbarSupportedContent .dropdown>a').css("color", '#5a5a5a');
         });
 
-        $("a.nav-link").mouseleave(function () {
-            //$(this).css("color", '#5a5a5a');
+        $(".navbar #navbarSupportedContent .navbar-nav>.nav-item").mouseleave(function () {
+            //$('.navbar  #navbarSupportedContent a').css("color", '#5a5a5a');
         })
 
         $(".navbar #navbarSupportedContent .navbar-nav>.nav-item>.nav-link").mouseleave(function () {
