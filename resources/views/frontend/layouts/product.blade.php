@@ -69,7 +69,8 @@
                 //console.log(newPrice.toFixed(2))
                 if(display){
                     $("#box_price").text('')
-                    $("#box_price").html('<s class="text-danger">{{ $product->price_2 }}</s> ' + newPrice.toFixed(2))
+                    $("#box_price").html('<s class="text-danger">{{ $product->price_2 }} </s>' + newPrice.toFixed(2))
+                    $("#total_cost").text('£' + (newPrice.toFixed(2) * unitQty()).toFixed(2))
                 }
                 return newPrice.toFixed(2)
             }
@@ -90,40 +91,41 @@
         //evaluate if the price can be bettered
         //display modal to see if customer want's the discount
         //get boxed values
-        var totalBoxQyt = unitQty('Box') / $("#quant").val()
-        var totalBoxPrice = unitPrice('Box')
-        var totalPackQyt = unitQty('Pack') / $("#quant").val()
-        var totalPackPrice = unitPrice('Pack')
-        var totalLengthQyt = unitQty('Length') / $("#quant").val()
-        var totalLengthPrice = unitPrice('Length')
+        var totalBoxQyt = unitQty('Box') / $("#quant").val(),
+            totalBoxPrice = unitPrice('Box'),
+            totalPackQyt = unitQty('Pack') / $("#quant").val(),
+            totalPackPrice = unitPrice('Pack'),
+            totalLengthQyt = unitQty('Length') / $("#quant").val(),
+            totalLengthPrice = unitPrice('Length'),
+            costOfBoxes = (Math.ceil(unitQty() / totalBoxQyt) * totalBoxPrice).toFixed(2),
+            unit_type = $("#unit_type").val()
 
-        var costOfBoxes = (Math.ceil(unitQty() / totalBoxQyt) * totalBoxPrice).toFixed(2)
         //checks if there's a basic product discount
         if(Math.ceil(unitQty() / totalBoxQyt) >= 2){
 
             costOfBoxes = (Math.ceil(unitQty() / totalBoxQyt) * (totalBoxQyt * basicProduct(false)) ).toFixed(2)
-            // console.log(Math.ceil(unitQty() / totalBoxQyt) + ' ' + totalBoxQyt + ' '  + basicProduct())
-            console.log(costOfBoxes)
+            //console.log(costOfBoxes)
         }
-
-        //console.log((totalPackPrice * $("#quant").val()) + ' ' + costOfBoxes)
-        var unit_type = $("#unit_type").val()
 
         switch (unit_type) {
             case 'Pack':
                 if ((totalPackPrice * $("#quant").val()) >= costOfBoxes) {
+                    unit_change = 'Box'
                     $('#basicProductModal').modal('show')
-                    $('#basicProductModal .modal-body').text('Cheaper')
+                    $('#basicProductModal .modal-body').html('<p>It would be cheaper for you to order by the box:</p>' +
+                         '<p class="orange-text"><span id="boxes">' + Math.ceil(unitQty() / totalBoxQyt) + '</span> Boxes (' + (totalBoxQyt * Math.ceil(unitQty() / totalBoxQyt)).toFixed(1) + 'm)' +
+                        ' = £' + costOfBoxes + '</p>')
                 }
                 else if ((totalPackPrice * $("#quant").val()) >= (costOfBoxes * 0.7)) {
+                    unit_change = 'Box'
                     $('#basicProductModal').modal('show')
-                    $('#basicProductModal .modal-body').text('Consider')
+                    $('#basicProductModal .modal-body').html('<p>You may consider it better value to order by the box:</p>' +
+                        '<p class="orange-text"><span id="boxes">' + Math.ceil(unitQty() / totalBoxQyt) + '</span> Boxes (' + (totalBoxQyt * Math.ceil(unitQty() / totalBoxQyt)).toFixed(1) + 'm)' +
+                        ' = £' + costOfBoxes + '</p>')
                 }
                 break;
             case 'Length':
-                if (unitQty() <= totalPackQyt && unitPrice() <= totalPackPrice) {
-                    $('#basicProductModal').modal('show')
-                }
+
                 break;
             default:
 
@@ -138,13 +140,23 @@
         }
     }
 
+    $("#choose_this_option").click(function (e) {
+        e.preventDefault();
+
+        $('#basicProductModal').modal('hide')
+        $('#quant').val($('#boxes').text())
+        $('#unit_type').val(unit_change)
+        //update the display under the add to basket button
+        displayCostAndQty()
+    })
+
 
     $("#add_to_basket").click(function (e) {
         e.preventDefault();
 
         $('#div').removeClass('animated shake')
 
-        $("#price").val(unitPrice())
+        $("#price").val(newPrice ? newPrice.toFixed(2) * unitQty() / $("#quant").val() : unitPrice())
 
         var product = $("#product_form").serialize()
         $.ajax({
@@ -273,8 +285,8 @@
     $(document).ready(function () {
         // executes when HTML-Document is loaded and DOM is ready
 
-        var newPrice = null;
-
+        var newPrice = false;
+        var unit_change = ''
         displayCostAndQty()
 
         $(".navbar #navbarSupportedContent .navbar-nav>.nav-item>.nav-link").mouseover(function () {
