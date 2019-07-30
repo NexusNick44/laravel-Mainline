@@ -13,7 +13,8 @@ class ProductController extends Controller
 {
     public function getProduct($product_id)
     {
-        $product = Products::where('product_id', $product_id)->first();
+        $product = Products::where('product_id', $product_id)
+            ->where('hide_product', '!=', 1)->first();
         if(empty($product))
             return redirect('/')->withFlashWarning('<h3>Search Found No Results!</h3>');
 
