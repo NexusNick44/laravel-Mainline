@@ -104,7 +104,7 @@
             costOfBoxes = (Math.ceil(unitQty() / totalBoxQyt) * totalBoxPrice).toFixed(2),
             unit_type = $("#unit_type").val()
 
-        //checks if there's a basic product discount
+        //checks if there's a basic product discount only if 2 or more boxes are required
         if(Math.ceil(unitQty() / totalBoxQyt) >= 2){
 
             costOfBoxes = (Math.ceil(unitQty() / totalBoxQyt) * (totalBoxQyt * basicProduct(false)) ).toFixed(2)
