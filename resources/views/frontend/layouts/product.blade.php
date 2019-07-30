@@ -287,8 +287,6 @@
 
 
     $(document).ready(function () {
-        // executes when HTML-Document is loaded and DOM is ready
-
 
         var unit_change = ''
         displayCostAndQty()
@@ -309,8 +307,8 @@
             //$('.navbar  #navbarSupportedContent a').css("color", '#5a5a5a');
         })
 
-        $(".navbar #navbarSupportedContent .navbar-nav>.nav-item>.nav-link").mouseleave(function () {
-            $(this).css("color", '#ffffff');
+        $(".navbar #navbarSupportedContent .navbar-nav>.nav-item>.dropdown>.nav-link").mouseleave(function () {
+            //$('.navbar  #navbarSupportedContent .dropdown a').css("color", '#ffffff');
         })
 
 // breakpoint and up
