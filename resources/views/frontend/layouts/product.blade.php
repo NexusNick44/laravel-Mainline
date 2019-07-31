@@ -41,6 +41,7 @@
                 if ($("#quant").val() < 2)
                     undoBasicProduct()
                 return Number($("#quant").val() * {{ $product->boxed_quantity }}).toFixed(2)
+
                 break;
             case 'Pack':
                 undoBasicProduct()
@@ -91,24 +92,52 @@
 
     }
 
+    function getCartContents(unit, handleData) {
+
+        var product = $("#product_form").serialize() + "&unit_search=" + unit
+
+        $.ajax({
+            type: 'post',
+            url: '/cart_contents',
+            data: product,
+            success: function (data) {
+                handleData(data)
+            }
+        }).done(function (data) {
+
+        }).fail(function () {
+            console.log('NO!!!')
+        });
+
+    }
+
+
     function betterPrice() {
         //evaluate if the price can be bettered
         //display modal to see if customer want's the discount
         //get boxed values
-        var totalBoxQyt = unitQty('Box') / $("#quant").val(),
+        var totalBoxQyt = unitQty('Box') / $("#quant").val() //+ getCartContents('Box'), // plus any boxes in the cart needs adding
             totalBoxPrice = unitPrice('Box'),
             totalPackQyt = unitQty('Pack') / $("#quant").val(),
             totalPackPrice = unitPrice('Pack'),
             totalLengthQyt = unitQty('Length') / $("#quant").val(),
             totalLengthPrice = unitPrice('Length'),
             costOfBoxes = (Math.ceil(unitQty() / totalBoxQyt) * totalBoxPrice).toFixed(2),
-            unit_type = $("#unit_type").val()
+            unit_type = $("#unit_type").val(),
+                cartProduct = ''
+
+        getCartContents('Box', function(output){
+            // here you use the output
+            cartProduct = output
+            console.log(output)
+        });
+
 
         //checks if there's a basic product discount only if 2 or more boxes are required
         if(Math.ceil(unitQty() / totalBoxQyt) >= 2){
 
             costOfBoxes = (Math.ceil(unitQty() / totalBoxQyt) * (totalBoxQyt * basicProduct(false)) ).toFixed(2)
-            //console.log(costOfBoxes)
+            console.log(totalBoxQyt)
         }
 
         switch (unit_type) {

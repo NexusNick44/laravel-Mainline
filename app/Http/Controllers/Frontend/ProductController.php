@@ -15,10 +15,13 @@ class ProductController extends Controller
     {
         $product = Products::where('product_id', $product_id)
             ->where('hide_product', '!=', 1)->first();
+
+        $cart_content = Cart::content();
+
         if(empty($product))
             return redirect('/')->withFlashWarning('<h3>Search Found No Results!</h3>');
 
-        return view('frontend.product.show', compact('product'));
+        return view('frontend.product.show', compact('product', 'cart_content'));
     }
 
 

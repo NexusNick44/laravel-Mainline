@@ -4,6 +4,10 @@
 
 @section('content')
     <div id="page-content">
+
+        {{ $cart_content->where('id', $product->product_id)->where('options.unit_type', 'Box')}}
+
+
         <div class="container mt-2">
             <div class="row flex-column-reverse flex-md-row">
                 <div class="col-lg-6 col-md-6 col-sm-12">
