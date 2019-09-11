@@ -113,25 +113,26 @@
 
 
     function betterPrice() {
+
+        var cartProduct = ''
+
+        getCartContents('Box', function(output){
+            // here you use the output
+            cartProduct = output
+            console.log(cartProduct)
+        });
+
         //evaluate if the price can be bettered
         //display modal to see if customer want's the discount
         //get boxed values
-        var totalBoxQyt = unitQty('Box') / $("#quant").val() //+ getCartContents('Box'), // plus any boxes in the cart needs adding
+        var totalBoxQyt = (unitQty('Box') / $("#quant").val()), // plus any boxes in the cart needs adding
             totalBoxPrice = unitPrice('Box'),
             totalPackQyt = unitQty('Pack') / $("#quant").val(),
             totalPackPrice = unitPrice('Pack'),
             totalLengthQyt = unitQty('Length') / $("#quant").val(),
             totalLengthPrice = unitPrice('Length'),
             costOfBoxes = (Math.ceil(unitQty() / totalBoxQyt) * totalBoxPrice).toFixed(2),
-            unit_type = $("#unit_type").val(),
-                cartProduct = ''
-
-        getCartContents('Box', function(output){
-            // here you use the output
-            cartProduct = output
-            console.log(output)
-        });
-
+            unit_type = $("#unit_type").val()
 
         //checks if there's a basic product discount only if 2 or more boxes are required
         if(Math.ceil(unitQty() / totalBoxQyt) >= 2){
